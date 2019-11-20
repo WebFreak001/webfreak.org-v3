@@ -1,0 +1,6 @@
+extends layout.dt
+
+block content
+	.gallery
+		- foreach (i; 0 .. 8)
+			img.followdman(src="/img/dman1.png", alt="D-Man")

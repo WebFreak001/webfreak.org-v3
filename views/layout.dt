@@ -1,0 +1,61 @@
+doctype html
+
+html(lang="en")
+	head
+		meta(charset="UTF-8")
+		meta(name="viewport", content="width=device-width, initial-scale=1.0")
+		meta(http-equiv="X-UA-Compatible", content="ie=edge")
+		title Code Blog, Tutorials, Games, Programming in D - #{req.host}
+		base(href="http://" ~ req.host ~ "/")
+		link(rel="stylesheet", href="/css/style.css")
+		meta(name="description", content="WebFreak's personal website containing programming tutorials, games and more - everything written in D (dlang)")
+		meta(name="robots", content="index,follow,noodp")
+		meta(name="googlebot", content="index,follow")
+		//- - static if (is(typeof(file)))
+		//- 	meta(property="og:url", content="http://" ~ req.host ~ "/" ~ file)
+		//- 	meta(property="og:type", content="article")
+		//- 	meta(property="article:author", content="Jan Jurzitza")
+		//- 	meta(property="article:section", content="Technology")
+		//- - else
+		meta(property="og:url", content="http://" ~ req.host ~ "/")
+		meta(property="og:type", content="website")
+		meta(property="og:site_name", content="WebFreak's code blog")
+		meta(property="og:title", content="WebFreak's code blog")
+		meta(property="og:locale", content="en_US")
+		meta(property="twitter:creator", content="@WebFreak001")
+		script(src="/js/script.js", defer, async)
+	body
+		.layout
+			header
+				a(href="/"): img(src="/img/header.gif", alt="webfreak.org")
+				img#dman1(src="/img/dman1.png", alt="D-Man")
+			aside.menu
+				h2 Menu
+				nav
+					ul
+						li: a(href="/") Home
+						li: a(href="/about") About
+						li: a(href="/blog") Blog
+						li: a(href="/guestbook") Guestbook
+						li: a(href="/about#projects") Projects
+						li: a(href="/games") Games
+						li: a(href="/gallery") Gallery
+						li: a(href="/login") Sign In
+			main
+				block content
+			aside.sideflag
+				a(href="https://dlang.org"): img(src="/img/sideflag.gif", alt="dlang.org")
+			footer
+				- void renderVisitors(int n)
+					- auto s = n.to!string;
+					- if (n < 0 || s.length > 6) s = "999999";
+					span.visitcount(aria-label=s, title=s)
+						- foreach (c; 0 .. 6 - s.length)
+							span.digit.digit0(aria-hidden="true")
+						- foreach (c; s)
+							span.digit(class="digit#{c}", aria-hidden="true")
+
+				p
+					- import visitors;
+					- renderVisitors(hit());
+					|  Visitors - This web page is best viewed on a 800x600 display.

@@ -1,0 +1,5 @@
+extends layout.dt
+
+block content
+	article.blog
+		|!= entry.html

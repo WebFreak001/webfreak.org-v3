@@ -1,0 +1,12 @@
+extends layout.dt
+
+block content
+	form.login(method="POST")
+		h1 Login
+		label
+			span Username
+			input(type="text", name="username")
+		label
+			span Password
+			input(type="password", name="password")
+		input(type="submit", value="Login")

@@ -1,0 +1,25 @@
+extends layout.dt
+
+block content
+	article.guestbook
+		h1 Guestbook
+		- import std.datetime.date;
+		- int n;
+		.comments
+			- foreach (entry; book)
+				- if (++n > 7) break;
+				.comment
+					p On #{cast(Date)entry.timestamp} #[b= entry.sender] says:
+					blockquote= entry.message
+
+		form.submit(method="POST")
+			- static if (is(typeof(error)))
+				p.error= error
+			input(type="hidden", name="token", value=token)
+			label
+				span Author
+				input(type="text", placeholder="My Name", name="name", minlength=2, maxlength=16, required, value=name)
+			label
+				span Message
+				input(type="text", placeholder="I gave this 5 stars on youtube!", name="message", title="Think of more content and try to write down all your thoughts to avoid spam.", minlength=12, maxlength=120, required, value=message)
+			input(type="submit", value="Post")

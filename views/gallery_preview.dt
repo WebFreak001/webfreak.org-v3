@@ -1,0 +1,18 @@
+extends layout.dt
+
+block content
+	- string sizeString(size_t bytes)
+		- import std.format : format;
+		- if (bytes >= 1024 * 1024)
+			- return format!"%.1f MiB"(bytes / 1024.0 / 1024.0);
+		- else if (bytes >= 1024)
+			- return format!"%.1f KiB"(bytes / 1024.0);
+		- else
+			- return format!"%d bytes"(bytes);
+	.gallery_preview
+		a(href="/gallery/" ~ fullfile)
+			- string warn;
+			- if (info.size > 800 * 1024)
+				- warn = "if (!confirm('Warning! This file is " ~ sizeString(info.size) ~ " big. Bandwidth could be heavily used while downloading this file for display. Continue to download?')) return event.preventDefault();";
+			img(src="/gallery/" ~ file, alt=fullfile ~ " gallery image", onclick=warn)
+		p File #{fullfile} (#{sizeString(info.size)})

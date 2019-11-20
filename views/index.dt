@@ -1,0 +1,8 @@
+extends layout.dt
+
+block content
+	h1 Blog
+	- foreach (entry; blogEntries)
+		article.preview
+			h2: a(href=entry.url)= entry.title
+	img(src="/img/netscape4.gif")
