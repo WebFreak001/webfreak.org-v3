@@ -15,12 +15,12 @@ void main(string[] args)
 
 	HTTPFileServerSettings files = new HTTPFileServerSettings();
 	files.maxAge = 365.days;
+	files.cacheControl = "public";
 
 	updateCache();
 
 	auto router = new URLRouter();
-	router.get("*", transformWebp());
-	router.get("*", serveStaticFiles("public", files));
+	router.get("*", transformWebp(serveStaticFiles("public", files)));
 	auto blog = new WebInterface();
 	router.registerWebInterface(blog);
 	auto blogSubdir = new WebInterfaceSettings();
@@ -39,8 +39,10 @@ void main(string[] args)
 	runApplication();
 }
 
-HTTPServerRequestDelegateS transformWebp()
+HTTPServerRequestDelegateS transformWebp(HTTPServerRequestDelegateS serve)
 {
+	import std.typecons : Nullable;
+
 	return (scope HTTPServerRequest req, scope HTTPServerResponse res) {
 		auto path = req.requestPath;
 		if (path.head.name.endsWith(".img"))
@@ -50,8 +52,15 @@ HTTPServerRequestDelegateS transformWebp()
 			else
 				path = path.parentPath ~ InetPath.Segment(path.head.name[0 .. $ - 4] ~ ".jpg");
 
-			res.redirect(path.toString);
+			req.requestPath = path;
+			req.requestURI = path.toString;
+
+			foreach (ref v; req.tupleof) // reset path cache
+				static if (is(typeof(v) : Nullable!string))
+					v = null;
 		}
+
+		return serve(req, res);
 	};
 }
 
