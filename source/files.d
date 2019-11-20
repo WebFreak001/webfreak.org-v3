@@ -13,7 +13,7 @@ import std.uuid;
 
 import visitors;
 
-static immutable bad = ctRegex!`(\p{Z}|\p{C}|\s)+`;
+static immutable bad = ctRegex!`(\p{Z}|\p{Cc}|\p{Cf}|\p{Cn}|\p{Co}|\s)+`;
 
 string encodePart(string value, int maxLength)
 {
