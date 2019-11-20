@@ -1,7 +1,5 @@
 module files;
 
-enum ReverseProxy = true;
-
 import vibe.vibe;
 
 import std.algorithm;
@@ -12,6 +10,8 @@ import std.stdio;
 import std.uni;
 import std.utf;
 import std.uuid;
+
+import visitors;
 
 static immutable bad = ctRegex!`(\p{Z}|\p{C}|\s)+`;
 
@@ -91,15 +91,6 @@ struct Guestbook
 		}
 		return 0;
 	}
-}
-
-string getIP(scope HTTPServerRequest req)
-{
-	static if (ReverseProxy)
-		return req.headers.get("X-Forwarded-For", req.headers.get("X-Real-IP",
-				req.clientAddress.toAddressString()));
-	else
-		return req.clientAddress.toAddressString();
 }
 
 class FilesWebInterface
