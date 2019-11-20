@@ -151,7 +151,8 @@ class FilesWebInterface
 		{
 			if (last.ip == entry.ip)
 			{
-				error ~= "Please wait a little bit before retrying. ";
+				if (entry.timestamp - last.timestamp < 1.minutes)
+					error ~= "Please wait a little bit before retrying. ";
 				break;
 			}
 		}
@@ -171,7 +172,7 @@ class FilesWebInterface
 		{
 			appendToFile(NativePath("guestbook.txt"), entry.toString() ~ '\n');
 
-			redirect("/guestbook");
+			redirect("/guestbook", 303);
 		}
 	}
 
