@@ -5,8 +5,9 @@ body, html {
 }
 
 html {
-	background: url("/img/bg.img") repeat;
+	background: radial-gradient(transparent, rgba(0, 0, 0, 0.5)), url("/img/bg.img") repeat;
 	color: white;
+	min-height: 100%;
 }
 
 body {
