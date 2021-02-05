@@ -98,8 +98,9 @@ function interactiveDman(elem) {
 		else
 			loaded = true;
 	});
+	if (mask.complete) loaded = true;
 
-	dman.addEventListener("load", function () {
+	var onLoaded = function () {
 		canvas.width = dman.naturalWidth;
 		canvas.height = dman.naturalHeight;
 		context = canvas.getContext("2d");
@@ -112,7 +113,10 @@ function interactiveDman(elem) {
 
 		if (loaded)
 			updateEyes();
-	});
+	};
+
+	if (dman.complete) onLoaded();
+	else dman.addEventListener("load", onLoaded);
 }
 
 interactiveDman(document.getElementById("dman1"));
