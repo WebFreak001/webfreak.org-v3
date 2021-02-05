@@ -6,11 +6,19 @@ block content
 		- import std.datetime.date;
 		- int n;
 		.comments
+			- import std.regex : ctRegex, matchAll;
+			- static immutable urlRegex = ctRegex!`(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-.?,'\/\\+&%$#_]*)?`;
 			- foreach (entry; book)
 				- if (++n > 7) break;
 				.comment
 					p On #{cast(Date)entry.timestamp} #[b= entry.sender] says:
-					blockquote= entry.message
+					- size_t start = 0;
+					blockquote
+						- foreach (match; matchAll(entry.message, urlRegex))
+							|= match.pre[start .. $]
+							a(href=match.hit, target="_blank")= match.hit
+							- start = match.pre.length + match.hit.length;
+						|= entry.message[start .. $]
 
 		form.submit(method="POST")
 			- static if (is(typeof(error)))
