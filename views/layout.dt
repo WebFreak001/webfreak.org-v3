@@ -24,7 +24,10 @@ html(lang="en")
 		meta(property="og:site_name", content="WebFreak's code blog")
 		meta(property="og:title", content="WebFreak's code blog")
 		meta(property="og:locale", content="en_US")
+		meta(property="twitter:image", content="https://" ~ req.host ~ "/img/dman1.png")
 		meta(property="twitter:creator", content="@WebFreak001")
+		meta(itemprop="name", content="WebFreak's code blog")
+		meta(itemprop="image", content="https://" ~ req.host ~ "/img/dman1.png")
 		script(src="/js/script.js", defer, async)
 	body
 		.layout
