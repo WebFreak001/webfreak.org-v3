@@ -380,7 +380,10 @@ function makePetStats(canvas) {
 		hideTimeout = setTimeout(hide, 6000);
 	}
 
-	window.addEventListener("resize", show);
+	window.addEventListener("resize", function() {
+		if (info.style.display == "")
+			show();
+	});
 
 	return {
 		performPet: doClick
