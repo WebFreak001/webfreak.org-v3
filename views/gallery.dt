@@ -1,7 +1,7 @@
 extends layout.dt
 
 block content
-	.gallery
+	article.gallery
 		- foreach (img; images)
 			a(href="/gallery/preview/" ~ img[0 .. $ - ".thumb.jpg".length])
 				img(src="/gallery/" ~ img, alt=img ~ " gallery thumbnail")

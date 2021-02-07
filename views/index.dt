@@ -4,5 +4,9 @@ block content
 	h1 Blog
 	- foreach (entry; blogEntries)
 		article.preview
-			h2: a(href=entry.url)= entry.title
-	img(src="/img/netscape4.gif")
+			- if (fresh)
+				h2: a(href=entry.url ~ "?fresh")= entry.title
+			- else
+				h2: a(href=entry.url)= entry.title
+	- if (fresh)
+		img(src="/img/netscape4.gif")

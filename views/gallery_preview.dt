@@ -12,7 +12,7 @@ block content
 	.gallery_preview
 		a(href="/gallery/" ~ fullfile)
 			- string warn;
-			- if (info.size > 800 * 1024)
+			- if (fresh && info.size > 800 * 1024)
 				- warn = "if (!confirm('Warning! This file is " ~ sizeString(info.size) ~ " big. Bandwidth could be heavily used while downloading this file for display. Continue to download?')) return event.preventDefault();";
-			img(src="/gallery/" ~ file, alt=fullfile ~ " gallery image", onclick=warn)
+			img(src="/gallery/" ~ file, alt=fullfile ~ " gallery image", onclick=warn, title="Click to enlarge")
 		p File #{fullfile} (#{sizeString(info.size)})

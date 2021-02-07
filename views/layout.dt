@@ -1,12 +1,15 @@
 doctype html
 
 html(lang="en")
+	- bool fresh = req.query.get("fresh") !is null;
 	head
 		meta(charset="UTF-8")
 		meta(name="viewport", content="width=device-width, initial-scale=1.0")
 		meta(http-equiv="X-UA-Compatible", content="ie=edge")
 		title Code Blog, Tutorials, Games, Programming in D - #{req.host}
 		link(rel="stylesheet", href="/css/style.css")
+		- if (fresh)
+			link(rel="stylesheet", href="/css/style-fresh.css")
 		meta(name="description", content="WebFreak's personal website containing programming tutorials, games and more - everything written in D (dlang)")
 		meta(name="robots", content="index,follow,noodp")
 		meta(name="googlebot", content="index,follow")
@@ -26,24 +29,42 @@ html(lang="en")
 	body
 		.layout
 			header
-				a(href="/"): img(src="/img/header.gif", alt="webfreak.org")
+				a(href="/")
+					- if (fresh)
+						img(src="/img/header.gif", alt="webfreak.org")
+					- else
+						b webfreak
+						| .org
 				img#dman1(src="/img/dman1.png", alt="D-Man")
 			aside.menu
-				h2 Menu
+				- if (fresh)
+					h2 Menu
 				nav
 					ul
-						li: a(href="/") Home
-						li: a(href="/about") About
-						li: a(href="/blog") Blog
-						li: a(href="/guestbook") Guestbook
-						li: a(href="/about#projects") Projects
-						li: a(href="/games") Games
-						li: a(href="/gallery") Gallery
-						li: a(href="/login") Sign In
+						- void link(string url, string name, string query = "")
+							- import vibe.core.path;
+							- if (fresh)
+								li: a(href=url ~ (query.length ? "#" ~ query : "") ~ "?fresh", class=(req.requestPath == InetPath.fromString(url) ? "active" : ""))= name
+							- else
+								li: a(href=url ~ (query.length ? "#" ~ query : ""), class=(req.requestPath == InetPath.fromString(url) ? "active" : ""))= name
+
+						- link("/", "Home");
+						- link("/about", "About");
+						- if (fresh)
+							- link("/blog", "Blog");
+						- link("/guestbook", "Guestbook");
+						- link("/projects", "Projects");
+						- if (fresh)
+							- link("/games", "Games");
+							- link("/gallery", "Gallery");
+							- link("/login", "Sign In");
+						- else
+							- link("/gallery", "D-Man Drawings");
 			main
 				block content
-			aside.sideflag
-				a(href="https://dlang.org"): img(src="/img/sideflag.gif", alt="dlang.org")
+			- if (fresh)
+				aside.sideflag
+					a(href="https://dlang.org"): img(src="/img/sideflag.gif", alt="dlang.org")
 			footer
 				- void renderVisitors(int n)
 					- auto s = n.to!string;
@@ -54,7 +75,10 @@ html(lang="en")
 						- foreach (c; s)
 							span.digit(class="digit#{c}", aria-hidden="true")
 
-				p
-					- import visitors;
-					- renderVisitors(hit(req));
-					|  Visitors - This web page is best viewed on a 800x600 display.
+				- import visitors;
+				- if (fresh)
+					p
+						- renderVisitors(hit(req));
+						|  Visitors - This web page is best viewed on a 800x600 display.
+				- else
+					p Copyright &copy; 2021 webfreak.org - #[a(href="https://github.com/WebFreak001/webfreak.org-v3/") Source Code] - #{hit(req)} visitors - #[a(href="?fresh") Change to #[span.fresh fresh] design]

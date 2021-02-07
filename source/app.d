@@ -26,10 +26,11 @@ void main(string[] args)
 	auto blogSubdir = new WebInterfaceSettings();
 	blogSubdir.urlPrefix = "/blog";
 	router.registerWebInterface(blog, blogSubdir);
-	router.get("/about", &getAbout);
-	router.get("/dmans", &getDMans);
-	router.get("/games", &getGames);
-	router.get("/login", &getLogin);
+	router.get("/about", &renderSimple!"about.dt");
+	router.get("/projects", &renderSimple!"projects.dt");
+	router.get("/dmans", &renderSimple!"dmans.dt");
+	router.get("/games", &renderSimple!"games.dt");
+	router.get("/login", &renderSimple!"login.dt");
 	router.registerWebInterface(new FilesWebInterface());
 
 	setTimer(10.seconds, toDelegate(&saveVisits), true);
@@ -64,22 +65,7 @@ HTTPServerRequestDelegateS transformWebp(HTTPServerRequestDelegateS serve)
 	};
 }
 
-void getAbout(scope HTTPServerRequest req, scope HTTPServerResponse res)
+void renderSimple(string page)(scope HTTPServerRequest req, scope HTTPServerResponse res)
 {
-	res.render!("about.dt", req);
-}
-
-void getDMans(scope HTTPServerRequest req, scope HTTPServerResponse res)
-{
-	res.render!("dmans.dt", req);
-}
-
-void getGames(scope HTTPServerRequest req, scope HTTPServerResponse res)
-{
-	res.render!("games.dt", req);
-}
-
-void getLogin(scope HTTPServerRequest req, scope HTTPServerResponse res)
-{
-	res.render!("login.dt", req);
+	res.render!(page, req);
 }

@@ -1,14 +1,21 @@
 extends layout.dt
 
 block content
+	h1 About WebFreak
 	article.about
-		h1 About WebFreak
-		p.
-			hi, I'm WebFreak and I'm a software developer mainly using
-			the #[a(href="https://dlang.org") D programming language]. I usually
-			make PC programs, sometimes embedded development and some web
-			development using state of the art techniques and design such as this
-			page.
+		- if (fresh)
+			p.
+				hi, I'm WebFreak and I'm a software developer mainly using
+				the #[a(href="https://dlang.org") D programming language]. I usually
+				make PC programs, sometimes embedded development and some web
+				development using state of the art techniques and design such as this
+				page.
+		- else
+			p.
+				hi, I'm WebFreak and I'm a software developer mainly using
+				the #[a(href="https://dlang.org") D programming language]. I usually
+				make PC programs, sometimes embedded development and some web
+				development.
 
 		p Follow me on social media:
 		ul
@@ -19,54 +26,3 @@ block content
 		ul
 			li #[a(rel="author", href="https://github.com/WebFreak001") GitHub]
 			li #[a(rel="author", href="https://gitlab.com/WebFreak001") GitLab]
-
-	a(name="projects")
-	article.projects
-		h2 Projects
-		h3 #[a(href="https://github.com/Pure-D/code-d") code-d] and #[a(href="https://github.com/Pure-D/serve-d") serve-d] for Visual Studio Code
-		p.
-			code-d is my #[a(href="https://dlang.org") D] extension
-			for #[a(href="https://code.visualstudio.com/") Visual Studio Code].
-			It started out as extension for #[a(href="https://atom.io/") Atom] in
-			July 2015 and has transitioned to vscode with editor independent
-			features.
-		p.
-			The atom extension started out as CoffeeScript code calling DCD, dfmt and
-			D-Scanner. It became apparent that this code wouldn't be able to scale
-			very well across multiple editors. When vscode was freshly released I
-			quickly became interested in it and ported atomize-d to it by converting
-			the coffeescript code to typescript. Maintaining the separate code bases
-			didn't seem to have a good future so I
-			created #[a(href="https://github.com/Pure-D/workspace-d") workspace-d] which unified
-			all the functionality for all editors.
-		p.
-			A few years after creating workspace-d, the
-			Microsoft&reg; #[a(href="https://microsoft.github.io/language-server-protocol/overview") Language Server Protocol]
-			reached version 2.0 which encouraged everyone to use it. It's basically
-			a different syntax from workspace-d but the underlying idea is the same.
-		p.
-			So I now made a wrapper for workspace-d for the Language Server Protocol
-			and called it #[a(href="https://github.com/Pure-D/serve-d") serve-d].
-			Currently this is the recommended program to use with Visual Studio Code
-			as it implements a lot of features.
-		p Install it from the marketplace today: 
-			a(href="https://marketplace.visualstudio.com/items?itemName=webfreak.code-d") https://marketplace.visualstudio.com/items?itemName=webfreak.code-d
-		p Join our discord: 
-			a(href="https://discord.gg/Bstj9bx")
-				img.badge(src="https://discordapp.com/api/guilds/242094594181955585/widget.png?style=shield", alt="Discord Online Chat")
-
-		h3 #[a(href="https://openrooms.app") OpenRooms]
-		p.
-			For the free-to-play rhythm game #[a(href="https://osu.ppy.sh") osu!] I
-			have made a bot, controllable using a website, which can automatically
-			manage multiplayer lobbys. It adds functionality for playing lobbies with
-			playlists for various play styles which are creatable by the users.
-
-		p Try it out: 
-			a(href="https://openrooms.app") https://openrooms.app
-		p Join the discord: 
-			a(href="https://discord.gg/aZabq2p")
-				img.badge(src="https://discordapp.com/api/guilds/512035251824885760/widget.png?style=shield", alt="Discord Online Chat")
-
-		h3 Other Projects
-		p See #[a(href="https://github.com/WebFreak001") others on GitHub].
