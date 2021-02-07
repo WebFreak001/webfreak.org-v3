@@ -399,6 +399,33 @@ main > .gallery_preview img {
 	border-radius: 5px;
 }
 
+.pettingInfo {
+	position: absolute;
+	padding: 10px;
+	background-color: #b03931;
+	border-radius: 5px;
+	box-shadow: 0 2px 7px rgb(0, 0, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.pettingInfo p {
+	margin: 0;
+	text-align: center;
+}
+
+.pettingInfo p:first-child {
+	font-weight: bold;
+}
+
+.pettingInfo p:last-child {
+	font-size: 0.8em;
+}
+
+.pettingInfo a {
+	font-weight: bold;
+	color: white;
+	text-decoration: underline;
+}
+
 .visitcount {
 	display: inline-flex;
 	vertical-align: middle;
