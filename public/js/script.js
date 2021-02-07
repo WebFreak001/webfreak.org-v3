@@ -327,7 +327,6 @@ function petUpdate() {
 }
 
 function makePetStats(canvas) {
-	var rect = canvas.getBoundingClientRect();
 	var info = document.createElement("div");
 	info.className = "pettingInfo";
 	info.style.display = "none";
@@ -352,6 +351,7 @@ function makePetStats(canvas) {
 
 	var hideTimeout;
 	function show() {
+		var rect = canvas.getBoundingClientRect();
 		info.style.left = ((rect.x || rect.left) + window.scrollX) + "px";
 		info.style.top = ((rect.y || rect.top) + rect.height + window.scrollY) + "px";
 		info.style.width = rect.width + "px";
@@ -379,6 +379,8 @@ function makePetStats(canvas) {
 		clearTimeout(hideTimeout);
 		hideTimeout = setTimeout(hide, 6000);
 	}
+
+	window.addEventListener("resize", show);
 
 	return {
 		performPet: doClick
